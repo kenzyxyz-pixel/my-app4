@@ -242,23 +242,6 @@
       padding: 13px 16px;
       text-decoration: none;
     }
-  
-    /* 1日1回ロック時の見た目 */
-    .dailyLocked .cardBtn{
-      filter: grayscale(.15) brightness(.92);
-      opacity: .78;
-      cursor: not-allowed;
-    }
-    .dailyLocked .cardBtn:hover{ transform: none; }
-
-  
-    .ctaSub{
-      margin-top: 8px;
-      color: rgba(255,255,255,.72);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
   </style>
 </head>
 
@@ -312,9 +295,9 @@
         </div>
 
         <a class="btn cta"
-           id="appLink" href="https://ac.cross-system.com/H558ec8Ha0ffaf0N/cl/?bId=69P16P3e&param4=A3204_zx"
+           href="https://ac.cross-system.com/H558ec8Ha0ffaf0N/cl/?bId=69P16P3e&param4=A3204_zx"
            target="_blank" rel="noopener">
-          <span id="ctaText">占いアプリ「ケアアプリ」で続きを見る</span>
+          占いアプリ「ケアアプリ」で続きを見る
         </a>
 
         
@@ -336,97 +319,40 @@
     const resultTag = document.getElementById("resultTag");
     const resultWord = document.getElementById("resultWord");
     const resultDetail = document.getElementById("resultDetail");
-    const appLink = document.getElementById("appLink");
-    const ctaHelper = document.getElementById("ctaHelper");
 
     const btnShuffle = document.getElementById("btnShuffle");
     const btnReset = document.getElementById("btnReset");
-
-    const ctaTextEl = document.getElementById("ctaText");
-    const ctaSubEl = document.getElementById("ctaSub");
 
     // カード枚数（見た目の並び用：12枚が“それっぽい”）
     const CARD_COUNT = 12;
 
     // 復縁向け：ひとこと結果
     const RESULTS = [
-      { tag:"追い風", word:"可能性アル", detail:"タイミング良し。まずは軽い挨拶から始めると流れに乗れます。", cta:"彼の本音と復縁の可能性を今すぐ見る（ケアアプリ）", helper:"当たるほど、次の一手が早く見えます。" },
-      { tag:"再始動", word:"連絡再開", detail:"相手からの反応は想像以上に前向き。短文でテンポよくが鍵。", cta:"『送る一言』の最適解を確認する（ケアアプリ）", helper:"長文より“返しやすい短文”が勝ち。" },
-      { tag:"修復", word:"誤解を解け", detail:"本音はすれ違いの中に。責めずに事実だけ伝えると好転します。", cta:"誤解を解く“言い回し”を占いで決める（ケアアプリ）", helper:"謝罪→感謝の順が通りやすい。" },
-      { tag:"静観", word:"今は待て", detail:"今動くより、数日置く方が結果が良くなる暗示です。", cta:"『いつ連絡する？』最適タイミングを見る（ケアアプリ）", helper:"焦りは逆効果。タイミングが全て。" },
-      { tag:"転機", word:"流れ変化", detail:"偶然の出来事が復縁のきっかけに。外出やSNSにヒントあり。", cta:"復縁が動く“きっかけ”を特定する（ケアアプリ）", helper:"偶然を“必然”に変える準備を。" },
-      { tag:"距離", word:"近づける", detail:"少しずつ心の距離が縮まっています。焦らず段階的に。", cta:"距離が縮む“段階”と攻略を確認する（ケアアプリ）", helper:"一歩ずつが最短ルート。" },
-      { tag:"注意", word:"深追いNG", detail:"連続連絡は逆効果。余白を残すことで相手が動きます。", cta:"『やってはいけない連絡』をチェックする（ケアアプリ）", helper:"余白が“追わせる力”になります。" },
-      { tag:"安心", word:"まだ絆あり", detail:"縁は切れていません。安心感を与える言葉が効果的。", cta:"安心感を出す“最初の一言”を作る（ケアアプリ）", helper:"不安を消すほど、相手は戻りやすい。" },
-      { tag:"整理", word:"感情整理", detail:"自分の気持ちを整えることで、相手も向き合いやすくなります。", cta:"気持ちが整う“復縁ルート”を確認する（ケアアプリ）", helper:"整った人ほど、選ばれます。" },
-      { tag:"兆し", word:"再会運", detail:"再び会える可能性あり。短時間の再会が鍵です。", cta:"会える日・誘い方を占いで決める（ケアアプリ）", helper:"“短時間”が成功率UP。" },
-      { tag:"選択", word:"覚悟必要", detail:"中途半端はNG。覚悟を決めた言葉が状況を動かします。", cta:"覚悟を伝える“決め台詞”を作る（ケアアプリ）", helper:"ブレない言葉は刺さります。" },
-      { tag:"癒し", word:"優しさ鍵", detail:"思いやりを見せることで、相手の警戒心が解けます。", cta:"相手が安心する“寄り添い方”を知る（ケアアプリ）", helper:"正しさより、安心感。" },
-      { tag:"再燃", word:"気持ち残る", detail:"相手の中にも未練あり。共通の思い出が突破口に。", cta:"『思い出の使い方』を今すぐ確認（ケアアプリ）", helper:"懐かしさは最強の武器。" },
-      { tag:"試練", word:"試される", detail:"小さな我慢が必要な時期。ここを越えると安定します。", cta:"試練の越え方（連絡頻度/距離感）を見る（ケアアプリ）", helper:"乗り越えるほど、関係は強くなる。" },
-      { tag:"再構築", word:"関係修正", detail:"以前と同じ形を目指さず、新しい関係性を意識して。", cta:"『新しい関係のルール』を決める（ケアアプリ）", helper:"同じやり方は、同じ結果に。" },
-      { tag:"余裕", word:"落ち着け", detail:"心の余裕が魅力として伝わります。深呼吸を忘れずに。", cta:"余裕が出る“最短の整え方”を見る（ケアアプリ）", helper:"落ち着いた人が、最後に勝つ。" },
-      { tag:"期待", word:"可能性大", detail:"復縁の可能性は高め。タイミングを見て一歩踏み出して。", cta:"復縁の確率を今すぐ確認する（ケアアプリ）", helper:"根拠があると、不安が減ります。" },
-      { tag:"誠実", word:"正直に", detail:"取り繕わない言葉が、相手の心を動かします。", cta:"正直に伝える“最適な言い方”を作る（ケアアプリ）", helper:"飾らない言葉が、一番響く。" },
-      { tag:"再接触", word:"連絡吉", detail:"今なら連絡してもOK。夜より昼が◎。", cta:"送信前に“文面チェック”する（ケアアプリ）", helper:"一言の差で、反応が変わります。" },
-      { tag:"忍耐", word:"焦るな", detail:"時間はかかるが、確実に前進しています。", cta:"待つ間にやるべきことを確認（ケアアプリ）", helper:"“準備”が未来を変える。" },
-      { tag:"好転", word:"風向き良し", detail:"最近の流れはあなたに有利。前向きな一言を添えて。", cta:"今の追い風を“復縁成功”に変える（ケアアプリ）", helper:"勢いがあるうちに整えるのがコツ。" },
-      { tag:"決着", word:"答え近い", detail:"関係の答えが見えてくる時期。自分の幸せを最優先に。", cta:"最終判断（復縁/前進）を占いで決める（ケアアプリ）", helper:"あなたが幸せになる選択を。" }
-    ];
+  { tag:"追い風", word:"可能性アル", detail:"タイミング良し。まずは軽い挨拶から始めると流れに乗れます。" },
+  { tag:"再始動", word:"連絡再開", detail:"相手からの反応は想像以上に前向き。短文でテンポよくが鍵。" },
+  { tag:"修復", word:"誤解を解け", detail:"本音はすれ違いの中に。責めずに事実だけ伝えると好転します。" },
+  { tag:"静観", word:"今は待て", detail:"今動くより、数日置く方が結果が良くなる暗示です。" },
+  { tag:"転機", word:"流れ変化", detail:"偶然の出来事が復縁のきっかけに。外出やSNSにヒントあり。" },
+  { tag:"距離", word:"近づける", detail:"少しずつ心の距離が縮まっています。焦らず段階的に。" },
+  { tag:"注意", word:"深追いNG", detail:"連続連絡は逆効果。余白を残すことで相手が動きます。" },
+  { tag:"安心", word:"まだ絆あり", detail:"縁は切れていません。安心感を与える言葉が効果的。" },
+  { tag:"整理", word:"感情整理", detail:"自分の気持ちを整えることで、相手も向き合いやすくなります。" },
+  { tag:"兆し", word:"再会運", detail:"再び会える可能性あり。短時間の再会が鍵です。" },
+  { tag:"選択", word:"覚悟必要", detail:"中途半端はNG。覚悟を決めた言葉が状況を動かします。" },
+  { tag:"癒し", word:"優しさ鍵", detail:"思いやりを見せることで、相手の警戒心が解けます。" },
+  { tag:"再燃", word:"気持ち残る", detail:"相手の中にも未練あり。共通の思い出が突破口に。" },
+  { tag:"試練", word:"試される", detail:"小さな我慢が必要な時期。ここを越えると安定します。" },
+  { tag:"再構築", word:"関係修正", detail:"以前と同じ形を目指さず、新しい関係性を意識して。" },
+  { tag:"余裕", word:"落ち着け", detail:"心の余裕が魅力として伝わります。深呼吸を忘れずに。" },
+  { tag:"期待", word:"可能性大", detail:"復縁の可能性は高め。タイミングを見て一歩踏み出して。" },
+  { tag:"誠実", word:"正直に", detail:"取り繕わない言葉が、相手の心を動かします。" },
+  { tag:"再接触", word:"連絡吉", detail:"今なら連絡してもOK。夜より昼が◎。" },
+  { tag:"忍耐", word:"焦るな", detail:"時間はかかるが、確実に前進しています。" },
+  { tag:"好転", word:"風向き良し", detail:"最近の流れはあなたに有利。前向きな一言を添えて。" },
+  { tag:"決着", word:"答え近い", detail:"関係の答えが見えてくる時期。自分の幸せを最優先に。" }
+];
 
     let locked = false;
-
-// === 1日1回制限（Cookie） ===
-// Cookie名：tarot_last（YYYY-MM-DD）
-const COOKIE_NAME = "tarot_last";
-
-function getCookie(name){
-  const parts = /* document.cookie */.split(";").map(v => v.trim());
-  for(const p of parts){
-    if(!p) continue;
-    const eq = p.indexOf("=");
-    const k = eq >= 0 ? p.slice(0, eq) : p;
-    const val = eq >= 0 ? p.slice(eq+1) : "";
-    if(k === name) return decodeURIComponent(val);
-  }
-  return "";
-}
-
-function setCookie(name, value, maxAgeSeconds){
-  /* document.cookie */ = `${name}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
-}
-
-function todayKey(){
-  const d = new /* Date( */);
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.get/* Date( */)).padStart(2,"0");
-  return `${y}-${m}-${day}`;
-}
-
-function setDailyLock(isLocked){
-  btnShuffle.disabled = isLocked;
-  btnReset.disabled = isLocked;
-
-  btnShuffle.style.opacity = isLocked ? "0.55" : "1";
-  btnReset.style.opacity   = isLocked ? "0.55" : "1";
-
-  if(isLocked){
-    statusEl.textContent = "";
-    document.body.classList.add("dailyLocked");
-  }else{
-    document.body.classList.remove("dailyLocked");
-  }
-}
-
-function checkDailyLock(){
-  const last = getCookie(COOKIE_NAME);
-  const today = todayKey();
-  const isLocked = (last === today);
-  locked = isLocked; // カード選択も止める
-  setDailyLock(isLocked);
-  return isLocked;
-}
 
     function randInt(max){ return Math.floor(Math.random() * max); }
 
@@ -465,10 +391,6 @@ function checkDailyLock(){
           if(locked) return;
           locked = true;
 
-          // 1日1回制限：占った日付をCookieに保存（約400日保持）
-          setCookie(COOKIE_NAME, todayKey(), 60*60*24*400);
-          setDailyLock(true);
-
           document.querySelectorAll(".cardBtn").forEach(b => b.classList.remove("picked"));
           btn.classList.add("picked");
 
@@ -477,14 +399,7 @@ function checkDailyLock(){
           resultWord.textContent = r.word;
           resultDetail.textContent = r.detail;
 
-          // CTA文言を結果ごとに変更
-          if (appLink) appLink.textContent = r.cta || "占いアプリ「ケアアプリ」で続きを見る";
-          if (ctaHelper) ctaHelper.textContent = r.helper || "迷ったら、まずは“相手の本音”を確認。";
-
-          if (ctaTextEl) ctaTextEl.textContent = r.cta || "占いアプリ「ケアアプリ」で続きを見る";
-          if (ctaSubEl) ctaSubEl.textContent = r.sub || "※タップでケアアプリへ";
-
-          statusEl.textContent = "結果が出ました。ケアアプリで続きをどうぞ。";
+          statusEl.textContent = "結果が出ました。アプリで続きをどうぞ。";
           openModal();
         });
 
@@ -493,7 +408,6 @@ function checkDailyLock(){
     }
 
     function doShuffle(){
-      if(checkDailyLock()) return;
       document.body.classList.add("isShuffling");
       statusEl.textContent = "シャッフル中…直感で1枚選んで。";
 
@@ -505,7 +419,6 @@ function checkDailyLock(){
     }
 
     function doReset(){
-      if(checkDailyLock()) return;
       closeModal();
       resultTag.textContent = "ひとこと";
       resultWord.textContent = "—";
@@ -530,8 +443,6 @@ function checkDailyLock(){
 
     // init
     renderGrid();
-    // 起動時に本日のロック状態を反映
-    checkDailyLock();
   </script>
 </body>
 </html>
