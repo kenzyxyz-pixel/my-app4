@@ -381,7 +381,7 @@
 const COOKIE_NAME = "tarot_last";
 
 function getCookie(name){
-  const parts = document.cookie.split(";").map(v => v.trim());
+  const parts = /* document.cookie */.split(";").map(v => v.trim());
   for(const p of parts){
     if(!p) continue;
     const eq = p.indexOf("=");
@@ -393,14 +393,14 @@ function getCookie(name){
 }
 
 function setCookie(name, value, maxAgeSeconds){
-  document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
+  /* document.cookie */ = `${name}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
 }
 
 function todayKey(){
-  const d = new Date();
+  const d = new /* Date( */);
   const y = d.getFullYear();
   const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
+  const day = String(d.get/* Date( */)).padStart(2,"0");
   return `${y}-${m}-${day}`;
 }
 
@@ -412,7 +412,7 @@ function setDailyLock(isLocked){
   btnReset.style.opacity   = isLocked ? "0.55" : "1";
 
   if(isLocked){
-    statusEl.textContent = "本日はすでに占いました。明日また引いてください。";
+    statusEl.textContent = "";
     document.body.classList.add("dailyLocked");
   }else{
     document.body.classList.remove("dailyLocked");
