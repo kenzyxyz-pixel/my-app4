@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>縦長タロットで占う｜復縁のひとこと</title>
+  <meta name="description" content="1枚直感で選ぶだけ。復縁の流れをひとことで占うタロットページ。" />
+
+  <style>
+    :root{
+      --bg1:#0b0714;
+      --bg2:#170b2d;
+      --text:#f5f3ff;
+      --muted:#cfc9ffcc;
+      --gold:#ffd36b;
+
+      --cardBorder:#ffffff22;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+
+      --btn1:#4a2e9e;
+      --btn2:#2a1a5a;
+      --cta1:#7b51ff;
+      --cta2:#ff5fd6;
+
+      /* カード背面SVG（外部画像なし） */
+      --cardBackSvg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='360' viewBox='0 0 220 360'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='30%25' r='80%25'%3E%3Cstop offset='0' stop-color='%23510e18'/%3E%3Cstop offset='1' stop-color='%2326080f'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff' stop-opacity='.22'/%3E%3Cstop offset='.5' stop-color='%23ffffff' stop-opacity='.06'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='.18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='220' height='360' rx='18' fill='url(%23g)'/%3E%3Crect x='10' y='10' width='200' height='340' rx='14' fill='none' stroke='url(%23b)' stroke-width='3'/%3E%3Crect x='18' y='18' width='184' height='324' rx='12' fill='none' stroke='%23ffffff' stroke-opacity='.18' stroke-width='2'/%3E%3C!-- center: simplified bagua + yin-yang --%3E%3Cg opacity='.75'%3E%3Ccircle cx='110' cy='180' r='56' fill='none' stroke='%23d9c8c8' stroke-opacity='.55' stroke-width='4'/%3E%3Ccircle cx='110' cy='180' r='24' fill='none' stroke='%23d9c8c8' stroke-opacity='.55' stroke-width='4'/%3E%3Cpath d='M110 134a46 46 0 1 0 0 92a23 23 0 1 1 0-46a23 23 0 1 0 0-46z' fill='%23d9c8c8' fill-opacity='.46'/%3E%3Ccircle cx='110' cy='157' r='6' fill='%23330a10' fill-opacity='.65'/%3E%3Ccircle cx='110' cy='203' r='6' fill='%23f2e7e7' fill-opacity='.65'/%3E%3C/g%3E%3C!-- corner ornaments --%3E%3Cg opacity='.45' fill='%23f2e7e7'%3E%3Cpath d='M34 46c10 0 18 8 18 18c0 2 0 4-1 6c-7-2-15-8-19-18z'/%3E%3Cpath d='M186 46c-10 0-18 8-18 18c0 2 0 4 1 6c7-2 15-8 19-18z'/%3E%3Cpath d='M34 314c10 0 18-8 18-18c0-2 0-4-1-6c-7 2-15 8-19 18z'/%3E%3Cpath d='M186 314c-10 0-18-8-18-18c0-2 0-4 1-6c7 2 15 8 19 18z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      background:
+        radial-gradient(900px 520px at 20% 10%, rgba(123,81,255,.22) 0%, transparent 60%),
+        radial-gradient(900px 520px at 80% 15%, rgba(255,95,214,.18) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    /* top */
+    .top{ padding: 26px 14px 14px; }
+    .topInner{ max-width: 980px; margin: 0 auto; text-align:center; }
+    .kicker{ color: var(--muted); letter-spacing:.12em; font-size: 13px; }
+    .title{
+      margin: 8px 0 8px;
+      font-size: clamp(34px, 6.2vw, 58px);
+      font-weight: 1000;
+      line-height: 1.05;
+      color: #ffeaa6;
+      text-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    .lead{ margin: 0 auto; max-width: 760px; color: var(--muted); line-height: 1.9; }
+    .note{ display:block; opacity:.85; font-size: 12px; margin-top: 4px; }
+
+    .btnRow{
+      margin-top: 16px;
+      display:flex;
+      gap: 12px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border: 1px solid var(--cardBorder);
+      background: rgba(15,12,30,.75);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 16px;
+      font-weight: 900;
+      cursor:pointer;
+      transition: transform .08s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ border-color: rgba(255,255,255,.28); }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.pill{
+      min-width: 160px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(123,81,255,.25), rgba(255,95,214,.18));
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+    .btn.ghost{ background: rgba(10,8,22,.35); }
+
+    .status{
+      margin: 14px auto 0;
+      max-width: 760px;
+      padding: 12px 14px;
+      border: 1px solid var(--cardBorder);
+      border-radius: 14px;
+      background: rgba(10,8,22,.40);
+      color: var(--muted);
+    }
+
+    /* main */
+    .wrap{ max-width: 980px; margin: 0 auto; padding: 14px 14px 44px; }
+
+    /* grid */
+    .gridWrap{ margin-top: 10px; }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      justify-items:center;
+    }
+    @media (max-width: 860px){ .grid{ grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 520px){ .grid{ grid-template-columns: repeat(2, 1fr); } }
+
+    /* Tarot card */
+    .cardBtn{
+      width: min(180px, 100%);
+      aspect-ratio: 2 / 3; /* 縦長 */
+      border-radius: 18px;
+      border: 1px solid var(--cardBorder);
+      background:
+        var(--cardBackSvg) center/cover no-repeat,
+        radial-gradient(180px 90px at 30% 20%, rgba(255,95,214,.22), transparent 65%),
+        radial-gradient(200px 100px at 70% 20%, rgba(123,81,255,.20), transparent 70%);
+      box-shadow: 0 18px 45px rgba(0,0,0,.42);
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .cardBtn:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.32); }
+    .cardBtn:active{ transform: translateY(0); }
+
+    .cardBtn::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(220px 110px at 50% 0%, rgba(255,211,107,.18), transparent 60%),
+        radial-gradient(240px 120px at 50% 100%, rgba(255,95,214,.14), transparent 65%);
+      opacity:.0;
+      transition: opacity .2s ease;
+      pointer-events:none;
+    }
+    .cardBtn:hover::after{ opacity:.45; }
+
+    /* picked */
+    .cardBtn.picked{
+      border-color: rgba(255,211,107,.55);
+      box-shadow: 0 24px 70px rgba(255,211,107,.12), 0 18px 55px rgba(0,0,0,.45);
+      filter: saturate(1.05);
+    }
+    .cardBtn.picked::after{ opacity:.75; }
+
+    /* shuffle animation */
+    .isShuffling .cardBtn{ animation: floaty .5s ease-in-out infinite alternate; }
+    @keyframes floaty{ from{ transform: translateY(0); } to{ transform: translateY(-3px); } }
+
+    /* modal */
+    .modal{ position: fixed; inset: 0; display:none; z-index: 999; }
+    .modal.open{ display:block; }
+
+    .modalOverlay{
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(6px);
+    }
+
+    .modalBox{
+      position: relative;
+      width: min(720px, calc(100% - 28px));
+      margin: 18vh auto 0;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(12,10,25,.78);
+      box-shadow: var(--shadow);
+      padding: 16px 16px 18px;
+    }
+
+    .modalClose{
+      position:absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,8,22,.45);
+      color: var(--text);
+      font-size: 22px;
+      cursor:pointer;
+    }
+
+    .modalHead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      padding-right: 44px;
+    }
+    .pill.small{
+      display:inline-block;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(10,8,22,.35);
+    }
+    .modalTitle{ margin: 0; font-size: 18px; letter-spacing:.06em; }
+
+    .resultWord{
+      margin-top: 10px;
+      font-size: clamp(30px, 5.4vw, 48px);
+      font-weight: 1000;
+      letter-spacing:.06em;
+      color: #ffeaa6;
+      text-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    .resultDetail{
+      margin-top: 8px;
+      border-top: 1px solid rgba(255,255,255,.14);
+      padding-top: 10px;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    /* CTA inside modal */
+    .ctaBox{
+      margin-top: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(20,16,39,.58), rgba(10,8,22,.42));
+      padding: 14px;
+    }
+    .ctaText{ color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+
+    .btn.cta{
+      display:block;
+      text-align:center;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(123,81,255,.95), rgba(255,95,214,.85));
+      box-shadow: 0 18px 55px rgba(123,81,255,.18);
+      padding: 13px 16px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top">
+    <div class="topInner">
+      <div class="kicker">縦長タロットで占う</div>
+      <h1 class="title">“復縁のひとこと”</h1>
+      <p class="lead">
+        1枚直感で選ぶだけ。結果を見て、アプリで続きをチェック！
+        <span class="note">※占いは娯楽・参考としてお楽しみください。</span>
+      </p>
+
+      <div class="btnRow">
+        <button id="btnShuffle" class="btn pill" type="button">シャッフル</button>
+        <button id="btnReset" class="btn pill ghost" type="button">リセット</button>
+      </div>
+
+      <div id="status" class="status" aria-live="polite">
+        カードをシャッフルして1枚選んでね。
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="gridWrap" aria-label="タロットカード一覧">
+      <div id="grid" class="grid">
+        <!-- JSでカード生成 -->
+      </div>
+    </section>
+  </main>
+
+  <!-- 結果モーダル -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modalOverlay" data-close="1"></div>
+
+    <div class="modalBox" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modalClose" id="btnClose" type="button" aria-label="閉じる">×</button>
+
+      <div class="modalHead">
+        <div class="pill small" id="resultTag">ひとこと</div>
+        <h2 id="modalTitle" class="modalTitle">占い結果</h2>
+      </div>
+
+      <div class="resultWord" id="resultWord">—</div>
+      <div class="resultDetail" id="resultDetail">ここに結果が表示されます。</div>
+
+      <div class="ctaBox">
+        <div class="ctaText">
+          もっと深く「相手の本音」「連絡のタイミング」「復縁が動く日」を知りたいなら
+        </div>
+
+        <a class="btn cta"
+           href="https://ac.cross-system.com/H558ec8Ha0ffaf0N/cl/?bId=69P16P3e&param4=A3204_zx"
+           target="_blank" rel="noopener">
+          占いアプリ「ケアアプリ」で続きを見る
+        </a>
+
+        <button class="btn pill ghost" id="btnAgain" type="button">もう一度引く</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 縦長タロット（1枚選択 → 結果モーダル）
+    // 外部ライブラリなし／単一HTMLで動作
+
+    const grid = document.getElementById("grid");
+    const statusEl = document.getElementById("status");
+
+    const modal = document.getElementById("modal");
+    const btnClose = document.getElementById("btnClose");
+    const btnAgain = document.getElementById("btnAgain");
+
+    const resultTag = document.getElementById("resultTag");
+    const resultWord = document.getElementById("resultWord");
+    const resultDetail = document.getElementById("resultDetail");
+
+    const btnShuffle = document.getElementById("btnShuffle");
+    const btnReset = document.getElementById("btnReset");
+
+    // カード枚数（見た目の並び用：12枚が“それっぽい”）
+    const CARD_COUNT = 12;
+
+    // 復縁向け：ひとこと結果
+    const RESULTS = [
+      { tag:"追い風", word:"可能性アル", detail:"タイミング良し。まずは“軽い挨拶”からスタートが吉。重い話は後回しでOK。" },
+      { tag:"修復", word:"誤解をほどけ", detail:"壁は気持ちより“誤解”。短く謝る→感謝を添える…この順が一番通りやすい。" },
+      { tag:"整える", word:"焦りは禁物", detail:"今は詰めると逆効果。間隔を空けて、生活と感情を整えるほど復縁が近づく流れ。" },
+      { tag:"接点", word:"会える兆し", detail:"“短時間・軽め”の提案が◎（例：10分だけ、近くに行くついで）。ハードルを下げよう。" },
+      { tag:"様子見", word:"静観が吉", detail:"相手の余裕が読みにくい時。追いLINEより、相手が返しやすい一言が勝ち。" },
+      { tag:"転機", word:"流れが変わる", detail:"偶然の再接点が起こりやすい。近況共有＋明るい締めで、次に繋げるのが吉。" },
+      { tag:"絆", word:"まだ繋がってる", detail:"糸は切れていません。責めない・詰めない・期待を押し付けない…が復縁の近道。" },
+      { tag:"注意", word:"慎重に進めて", detail:"相手に余裕がない暗示。返信が来たら短く明るく。結論を迫らないのが◎。" }
+    ];
+
+    let locked = false;
+
+    function randInt(max){ return Math.floor(Math.random() * max); }
+
+    function shuffleArray(arr){
+      const a = arr.slice();
+      for(let i=a.length-1; i>0; i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function openModal(){
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden","false");
+    }
+
+    function closeModal(){
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden","true");
+    }
+
+    function renderGrid(){
+      grid.innerHTML = "";
+      locked = false;
+
+      const order = shuffleArray([...Array(CARD_COUNT)].map((_,i)=>i+1));
+      order.forEach((no) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "cardBtn";
+        btn.setAttribute("aria-label", `タロットカード ${no}`);
+        btn.dataset.no = String(no);
+
+        btn.addEventListener("click", () => {
+          if(locked) return;
+          locked = true;
+
+          document.querySelectorAll(".cardBtn").forEach(b => b.classList.remove("picked"));
+          btn.classList.add("picked");
+
+          const r = RESULTS[randInt(RESULTS.length)];
+          resultTag.textContent = r.tag;
+          resultWord.textContent = r.word;
+          resultDetail.textContent = r.detail;
+
+          statusEl.textContent = "結果が出ました。アプリで続きをどうぞ。";
+          openModal();
+        });
+
+        grid.appendChild(btn);
+      });
+    }
+
+    function doShuffle(){
+      document.body.classList.add("isShuffling");
+      statusEl.textContent = "シャッフル中…直感で1枚選んで。";
+
+      setTimeout(() => {
+        document.body.classList.remove("isShuffling");
+        renderGrid();
+        statusEl.textContent = "シャッフル完了。気になるカードを1枚タップ。";
+      }, 600);
+    }
+
+    function doReset(){
+      closeModal();
+      resultTag.textContent = "ひとこと";
+      resultWord.textContent = "—";
+      resultDetail.textContent = "ここに結果が表示されます。";
+      statusEl.textContent = "カードをシャッフルして1枚選んでね。";
+      renderGrid();
+    }
+
+    btnShuffle.addEventListener("click", doShuffle);
+    btnReset.addEventListener("click", doReset);
+    btnAgain.addEventListener("click", () => { closeModal(); doShuffle(); });
+    btnClose.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      const t = e.target;
+      if(t && t.dataset && t.dataset.close === "1") closeModal();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+
+    // init
+    renderGrid();
+  </script>
+</body>
+</html>
