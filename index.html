@@ -300,7 +300,7 @@
           占いアプリ「ケアアプリ」で続きを見る
         </a>
 
-        <button class="btn pill ghost" id="btnAgain" type="button">もう一度引く</button>
+        
       </div>
     </div>
   </div>
@@ -314,7 +314,7 @@
 
     const modal = document.getElementById("modal");
     const btnClose = document.getElementById("btnClose");
-    const btnAgain = document.getElementById("btnAgain");
+    
 
     const resultTag = document.getElementById("resultTag");
     const resultWord = document.getElementById("resultWord");
@@ -415,7 +415,7 @@
 
     btnShuffle.addEventListener("click", doShuffle);
     btnReset.addEventListener("click", doReset);
-    btnAgain.addEventListener("click", () => { closeModal(); doShuffle(); });
+    
     btnClose.addEventListener("click", closeModal);
 
     modal.addEventListener("click", (e) => {
